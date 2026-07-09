@@ -3,6 +3,7 @@ import string
 import pyperclip
 
 
+# Prompt the user for password generation preferences.
 def get_user_options():
     length = int(input("Password length: "))
     use_upper = input("Include uppercase letters? (y/n): ").strip().lower() == "y"
@@ -12,6 +13,7 @@ def get_user_options():
     count = int(input("How many passwords? "))
     return length, use_upper, use_lower, use_digits, use_symbols, count
 
+# Build the character set based on the selected options.
 def get_character_set(use_upper, use_lower, use_digits, use_symbols):
     char_set = ""
     if use_upper:
@@ -27,17 +29,20 @@ def get_character_set(use_upper, use_lower, use_digits, use_symbols):
         char_set = string.ascii_lowercase
     return char_set
 
+# Create a single password by randomly selecting characters from the character set.
 def generate_password(length, char_set):
     password = ""
     for i in range(length):
         password += random.choice(char_set)
     return password
 
+# Show all generated passwords to the user.
 def display_passwords(passwords):
     print("\nYour generated passwords:")
     for i, password in enumerate(passwords):
         print(f"  {i + 1}. {password}")
 
+# Allow the user to copy one generated password to the clipboard.
 def copy_to_clipboard(passwords):
     choice = input("\nEnter the number of the password to copy (or 0 to skip): ")
     choice = int(choice)
@@ -46,6 +51,7 @@ def copy_to_clipboard(passwords):
     pyperclip.copy(passwords[choice - 1])
     print(f"Password {choice} copied to clipboard!")
 
+# Main workflow that gathers settings, generates passwords, and displays them.
 def main():
     length, use_upper, use_lower, use_digits, use_symbols, count = get_user_options()
     char_set = get_character_set(use_upper, use_lower, use_digits, use_symbols)
